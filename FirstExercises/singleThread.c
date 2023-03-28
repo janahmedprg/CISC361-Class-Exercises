@@ -15,9 +15,14 @@ int main()
     double cpu_time_taken;
     start = clock();
     //Summing code here
- 
+    sum = 0;
+    for(int i = 0; i< MAX_NO_OF_ELEMENTS; ++i){
+        sum += arr[i];
+    } 
+    end = clock();
     //Time calculations here
     printf("Total sum: %lld\n", sum);
+    cpu_time_taken = ((double) (end - start)) / CLOCKS_PER_SEC;
     printf("Time taken to sum all the numbers are %lf\n", cpu_time_taken);
     return 0;
 }
