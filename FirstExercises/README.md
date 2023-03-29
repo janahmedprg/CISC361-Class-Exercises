@@ -1,10 +1,12 @@
-Commands:
+# Commands:
+```
 gcc singleThread.c -o singleThread.exe
 ./singleThread
 gcc multiThread.c -o multiThread.exe
 ./multiThread.exe
+```
 
-Answers to questions:
+# Answers to questions:
 When running the single threaded program the average time taken to sum
 is around 0.1 seconds. When having only two processes the average is around
 0.1 seconds as well.
