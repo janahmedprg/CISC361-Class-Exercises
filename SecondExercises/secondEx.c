@@ -20,7 +20,7 @@ int main()
     int wait_time = 0, turnaround_time = 0, arrival_time[10], burst_time[10],
         temp[10];
     float average_wait_time = 0, average_turnaround_time = 0;
-    bool round_robin_algorithm = false;
+    bool round_robin_algorithm = true;
     for (i = 0; i < 10; i++)
     {
         arrival_time[i] = 0;
@@ -95,6 +95,35 @@ int main()
     }
     else
     {
+        qsort(pArr, num_processes,sizeof(struct process), cmpArrival);
+        int currentTime = pArr[0].atime;
+        bool flag = true;
+        while(flag){
+            flag = false;
+            int turnaroundTime = 0;
+            int waitingTime = 0;
+            for(int i = 0; i<num_processes;++i){
+                if(pArr[i].btime > 0){
+                    flag = true;
+                    if(time_quantum>pArr[i].btime){
+                        currentTime += pArr[i].btime;
+                    }
+                    else{
+                        currentTime += time_quantum;
+                    }
+                    pArr[i].btime -= time_quantum;
+                }
+                if (pArr[i].btime<= 0 && pArr[i].id>0){
+                    waitingTime = currentTime - temp[pArr[i].id -1] - pArr[i].atime;
+                    turnaroundTime = waitingTime + temp[pArr[i].id -1];
+                    average_turnaround_time += turnaroundTime;
+                    average_wait_time += waitingTime;
+                    printf("\nProcess[%d] \t\t%d \t\t\t%d\t\t %d\t\t\t %d\n",pArr[i].id,pArr[i].atime,temp[pArr[i].id-1],turnaroundTime,waitingTime);
+                    pArr[i].id = -1;
+                }
+            }
+        }
+
     }
     // Calculate & Print Average Wait and Turnaround Times
     average_wait_time/=(double)num_processes;
