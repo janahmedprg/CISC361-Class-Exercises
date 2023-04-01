@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 struct process{
-    int id, atime, btime;
+    int id, atime, btime, priority;
 };
 
 int cmpArrival(const void *a, const void *b){
@@ -18,14 +18,15 @@ int main()
     int i = 0, num_processes = 0, total_time = 0, x, output_flag = 0,
         time_quantum = 0;
     int wait_time = 0, turnaround_time = 0, arrival_time[10], burst_time[10],
-        temp[10];
+        temp[10], priorities[10];
     float average_wait_time = 0, average_turnaround_time = 0;
-    bool round_robin_algorithm = true;
+    bool round_robin_algorithm = false;
     for (i = 0; i < 10; i++)
     {
         arrival_time[i] = 0;
         burst_time[i] = 0;
         temp[i] = 0;
+        priorities[i] = -1;
     }
 
     // Define Number of Processes
@@ -50,12 +51,16 @@ int main()
         printf("Burst Time (>0):\t");
         scanf("%d", &burst_time[i]);
         temp[i] = burst_time[i];
+        
+        printf("Priority (>=0):\t");
+        scanf("%d",&priorities[i]);
 
         pArr[i].id = i+1;
         pArr[i].atime = arrival_time[i];
         pArr[i].btime = burst_time[i];
+        pArr[i].priority = priorities[i];
 
-        if (arrival_time[i] < 0 && burst_time[i] < 1)
+        if (arrival_time[i] < 0 || burst_time[i] < 1 || priorities < 0)
         {
             printf("Incorrect Values Entered");
             i--;
@@ -77,7 +82,7 @@ int main()
     }
 
     // Prepare Output
-    printf("\nProcess ID\t\tArrival Time\t\tBurst Time\t Turnaround Time\t Waiting Time\n");
+    printf("\nProcess ID\t\tArrival Time\t\tBurst Time\t\tPriority\t Turnaround Time\t Waiting Time\n");
  
     // Perform Scheduling Calculations
     if (!round_robin_algorithm)
@@ -88,7 +93,7 @@ int main()
             currentTime += pArr[i].btime;
             int turnaroundTime = currentTime - pArr[i].atime;
             int waitingTime = turnaroundTime - pArr[i].btime;
-            printf("\nProcess[%d] \t\t%d \t\t\t%d\t\t %d\t\t\t %d\n",pArr[i].id,pArr[i].atime,pArr[i].btime,turnaroundTime,waitingTime);
+            printf("\nProcess[%d] \t\t%d \t\t\t%d\t\t\t%d\t\t %d\t\t\t %d\n",pArr[i].id,pArr[i].atime,pArr[i].btime,pArr[i].priority,turnaroundTime,waitingTime);
             average_turnaround_time += (double)turnaroundTime;
             average_wait_time += (double)waitingTime;
         }
@@ -118,7 +123,7 @@ int main()
                     turnaroundTime = waitingTime + temp[pArr[i].id -1];
                     average_turnaround_time += turnaroundTime;
                     average_wait_time += waitingTime;
-                    printf("\nProcess[%d] \t\t%d \t\t\t%d\t\t %d\t\t\t %d\n",pArr[i].id,pArr[i].atime,temp[pArr[i].id-1],turnaroundTime,waitingTime);
+                    printf("\nProcess[%d] \t\t%d \t\t\t%d\t\t\t%d\t\t %d\t\t\t %d\n",pArr[i].id,pArr[i].atime,temp[pArr[i].id-1],pArr[i].priority,turnaroundTime,waitingTime);
                     pArr[i].id = -1;
                 }
             }
