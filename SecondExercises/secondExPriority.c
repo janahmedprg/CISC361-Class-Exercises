@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "linkedList.h"
 
 struct process{
     int id, atime, btime, priority;
@@ -10,6 +11,12 @@ int cmpArrival(const void *a, const void *b){
     struct process *x = (struct process *) a;
     struct process *y = (struct process *) b;
     return x->atime > y->atime;
+}
+
+int cmpPriority(const void *a, const void *b){
+    struct process *x = (struct process *) a;
+    struct process *y = (struct process *) b;
+    return x->priority > y->priority;
 }
 
 int main()
