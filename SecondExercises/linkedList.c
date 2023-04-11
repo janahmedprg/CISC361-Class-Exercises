@@ -1,3 +1,6 @@
+ /* I am using https://www.tutorialspoint.com/data_structures_algorithms/linked_list_program_in_c.htm
+    linked list implementation. */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
