@@ -12,6 +12,7 @@ Max = np.array([[5, 1, 1, 7],\
                 [6, 3, 2, 5]])
 
 Need = Max - Alloc
+print(Need)
 Available = np.array([1, 0, 0, 2])
 # Request = np.array([0, 4, 2, 0])
 Work = Available

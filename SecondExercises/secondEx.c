@@ -103,6 +103,9 @@ int main()
             int turnaroundTime = 0;
             int waitingTime = 0;
             for(int i = 0; i<num_processes;++i){
+                if(pArr[i].atime>currentTime){
+                    continue;
+                }
                 if(pArr[i].btime > 0){
                     flag = true;
                     if(time_quantum>pArr[i].btime){
